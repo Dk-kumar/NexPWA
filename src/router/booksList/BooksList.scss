@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    padding: 3rem;
+    margin: auto;
+    width: 80%; 
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: .4rem;
+}
+
+td, th {
+    padding: 15px 20px;
+    cursor: pointer;
+}
+
+th {
+    background-color:  #007bff;
+    color: #fafafa;
+    font-family: 'Open Sans',Sans-serif;
+    font-weight: 200;
+}
+
+tr {
+    width: 100%;
+    background-color: #fafafa;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;    
+}
+
+tr:nth-child(even) {
+    background-color: #eeeeee;
+}
+
+.list-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.pagination-buttons {
+    padding-top: .5rem;
+    display: flex;
+    padding-right: 1rem;
+}
