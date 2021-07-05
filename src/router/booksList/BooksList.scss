@@ -45,3 +45,26 @@ tr:nth-child(even) {
     display: flex;
     padding-right: 1rem;
 }
+
+.pagination-buttons .pervious-button {
+    background-color: #007bff;
+    color: #eeeeee;
+    border: none;
+    padding: .5rem;
+    border-radius: .2rem;
+    cursor: pointer;
+}
+
+.pagination-buttons .next-button {
+    background-color: #007bff;
+    color: #eeeeee;
+    border: none;
+    padding: .5rem;
+    border-radius: .2rem;
+    cursor: pointer;
+}
+
+.pagination-buttons .current-page {
+    color: #eeeeee;
+    padding: .5rem;
+}

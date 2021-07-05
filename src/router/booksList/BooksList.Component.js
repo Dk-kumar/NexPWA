@@ -29,9 +29,9 @@ class BookList extends Component {
                         {this.props.pageCalculation()}
                     </tbody>
                     <div className='pagination-buttons'>
-                        <button onClick={this.props.paginatePreviousPage}>Previous</button>
-                        <span>{this.props.datas.currentPage}</span>
-                        <button onClick={this.props.paginateNextPage}>Next</button>
+                        <button className='pervious-button' onClick={this.props.paginatePreviousPage}>Previous</button>
+                        <span className='current-page'>{this.props.datas.currentPage}</span>
+                        <button className='next-button' onClick={this.props.paginateNextPage}>Next</button>
                     </div>
                 </table>
             </>

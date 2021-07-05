@@ -30,7 +30,7 @@ class BookListContainer extends Component {
     render() {
         return (
             <>
-                {!this.state.isLoaded && <p>Loading...</p>}
+                {!this.state.isLoaded && <p style={{color: "white", textAlign: "center"}}>Loading...</p>}
                 {this.state.isLoaded && <BookList
                     datas={this.state}
                     pageCalculation={() => this.pageCalculation()}
@@ -49,7 +49,6 @@ class BookListContainer extends Component {
         const { booksArray, currentPage, perPage } = this.state
         let lastIndex = currentPage * perPage
         let firstIndex = lastIndex - perPage
-        debugger
         return (booksArray.slice(firstIndex, lastIndex)
             .map(data => {
                 return (
