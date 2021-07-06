@@ -4,6 +4,7 @@ import STORE from './redux/store';
 import './App.css';
 import HomeContainer from './routes/home/Home.container';
 import HeaderContainer from './components/header/Header.container';
+import BooksDetails from './router/BookDetails/BookDetail.component';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -13,7 +14,9 @@ function App() {
         <HeaderContainer />
         <Switch>
           <Route path="/" exact component={HomeContainer} />
-          <Route path='/bookList' component={ BookListContainer } />
+          <Route path='/bookList/:bookID/:authors/:language_code/:average_rating/:price/:ratings_count/:title'
+            component={BooksDetails} />
+          <Route path='/bookList' component={BookListContainer} />
         </Switch>
       </Router>
     </Provider>
