@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 
 import './BooksList.scss'
 
+/* 
+ * class booklist
+ */
 class BookList extends Component {
 
     constructor(props) {
