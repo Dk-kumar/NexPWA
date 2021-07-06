@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 import './BooksList.scss'
 
-/* 
- * class booklist
- */
 class BookList extends Component {
 
     constructor(props) {
@@ -31,12 +28,12 @@ class BookList extends Component {
                     <tbody>
                         {this.props.pageCalculation()}
                     </tbody>
-                    <div className='pagination-buttons'>
-                        <button className='pervious-button' onClick={this.props.paginatePreviousPage}>Previous</button>
-                        <span className='current-page'>{this.props.datas.currentPage}</span>
-                        <button className='next-button' onClick={this.props.paginateNextPage}>Next</button>
-                    </div>
                 </table>
+                <div className='pagination-buttons'>
+                    <button className='pervious-button' onClick={this.props.paginatePreviousPage}>Previous</button>
+                    <span className='current-page'>{this.props.datas.currentPage}</span>
+                    <button className='next-button' onClick={this.props.paginateNextPage}>Next</button>
+                </div>
             </>
         );
     }

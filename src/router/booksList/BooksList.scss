@@ -4,7 +4,7 @@ body {
 }
 
 table {
-    padding: 3rem;
+    padding: 3rem 3rem 0;
     margin: auto;
     width: 80%; 
     border-spacing: 0;
@@ -41,30 +41,47 @@ tr:nth-child(even) {
 }
 
 .pagination-buttons {
-    padding-top: .5rem;
+    padding: .5rem 0;
     display: flex;
-    padding-right: 1rem;
+    justify-content: center;
+    & .pervious-button {
+        background-color: #007bff;
+        color: #eeeeee;
+        border: none;
+        padding: .5rem;
+        border-radius: .2rem;
+        cursor: pointer;
+    }
+    & .next-button {
+        background-color: #007bff;
+        color: #eeeeee;
+        border: none;
+        padding: .5rem;
+        border-radius: .2rem;
+        cursor: pointer;
+    }
+    & .current-page {
+        color: #eeeeee;
+        padding: .5rem;
+    }
 }
 
-.pagination-buttons .pervious-button {
-    background-color: #007bff;
-    color: #eeeeee;
-    border: none;
-    padding: .5rem;
-    border-radius: .2rem;
-    cursor: pointer;
-}
+::-webkit-scrollbar {
+    width: 5px;
+    &-track {
+        background: transparent;
+    }
+    &-thumb {
+        background: #aaa;
+        &:hover {
+            background: #555;
+        }
+    }
+}  
 
-.pagination-buttons .next-button {
-    background-color: #007bff;
-    color: #eeeeee;
-    border: none;
-    padding: .5rem;
-    border-radius: .2rem;
-    cursor: pointer;
-}
-
-.pagination-buttons .current-page {
-    color: #eeeeee;
-    padding: .5rem;
+@media screen and (max-width: 480px) {
+    table, td, th, tr {
+        padding: 5px;
+        margin: 5px auto;
+    }
 }

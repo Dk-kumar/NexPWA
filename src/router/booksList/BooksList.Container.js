@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 import BookList from './BooksList.Component';
 import { paginateNextPage, paginatePreviousPage } from '../../redux/BooksList/BookListAction';
 
@@ -30,7 +30,7 @@ class BookListContainer extends Component {
     render() {
         return (
             <>
-                {!this.state.isLoaded && <p style={{color: "white", textAlign: "center"}}>Loading...</p>}
+                {!this.state.isLoaded && <p style={{ color: "white", textAlign: "center" }}>Loading...</p>}
                 {this.state.isLoaded && <BookList
                     datas={this.state}
                     pageCalculation={() => this.pageCalculation()}
@@ -54,9 +54,10 @@ class BookListContainer extends Component {
                 return (
                     <tr key={data.bookID}>
                         <td>
-                            <a>
+                            <Link className='list-link' to={`/bookList/${data.bookID}/${data.authors}/${data.language_code}
+                                /${data.average_rating}/${data.price}/${data.ratings_count}/${data.title}`}>
                                 {data.title}
-                            </a>
+                            </Link>
                         </td>
                         <td>{data.authors}</td>
                         <td>₹{data.price}</td>
