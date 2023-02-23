@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import BookList from './BooksList.Component';
 import { useState } from 'react';
 import { paginateNextPage, paginatePreviousPage } from '../../redux/BooksList/BookListAction';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
-import useInfiniteScroll from '../../util/useInfiniteScroll';
 
 function BookListContainer() {
     const dispatch = useDispatch();
@@ -19,7 +17,7 @@ function BookListContainer() {
         currentPage: currentPage,
         perPage: 10
     })
-    
+
     const fetchData = async () => {
         // const client = new ApolloClient({
         //     uri: 'https://countries.trevorblades.com/graphql',
@@ -42,11 +40,11 @@ function BookListContainer() {
         //     .then((result) => console.log(result));
         const res = await fetch("https://s3-ap-southeast-1.amazonaws.com/he-public-data/books8f8fe52.json");
         const json = await res.json();
-        setData({
+        setData((data) => ({
             ...data,
             isLoaded: true,
             booksArray: json
-        });
+        }));
     };
 
     useEffect(() => {
