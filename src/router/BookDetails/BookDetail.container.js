@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import BooksDetails from './BookDetail.component';
 
-
 class BookDetailsContainer extends Component {
     constructor(props) {
         super(props);

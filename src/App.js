@@ -4,10 +4,10 @@ import STORE from './redux/store';
 import './App.css';
 import HomeContainer from './routes/home/Home.container';
 import HeaderContainer from './components/header/Header.container';
-import BooksDetails from './router/bookDetails/BookDetail.component';
+import BooksDetails from './router/BookDetails/BookDetail.component';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
     <Provider store={STORE}>
       <Router>
@@ -20,8 +20,6 @@ function App() {
         </Switch>
       </Router>
     </Provider>
-
-
   );
 }
 

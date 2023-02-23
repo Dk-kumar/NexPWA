@@ -1,41 +1,69 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BookList from './BooksList.Component';
+import { useState } from 'react';
 import { paginateNextPage, paginatePreviousPage } from '../../redux/BooksList/BookListAction';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import useInfiniteScroll from '../../util/useInfiniteScroll';
 
-class BookListContainer extends Component {
+function BookListContainer() {
+    const dispatch = useDispatch();
+    // const paginateNext = dispatch(props.paginateNextPage());
+    // const paginatePrevious = dispatch(props.paginatePreviousPage());
+    const currentPage = useSelector(state => state.Page);
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            booksArray: [],
-            isLoaded: false,
-            currentPage: this.props.currentPage,
-            perPage: 10
-        }
-    }
+    const [data, setData] = useState({
+        booksArray: [],
+        isLoaded: false,
+        currentPage: currentPage,
+        perPage: 10
+    })
+    
+    const fetchData = async () => {
+        // const client = new ApolloClient({
+        //     uri: 'https://countries.trevorblades.com/graphql',
+        //     cache: new InMemoryCache(),
+        // });
 
-    componentDidMount() {
-        fetch('https://s3-ap-southeast-1.amazonaws.com/he-public-data/books8f8fe52.json')
-            .then(res => res.json())
-            .then(json => {
-                this.setState({
-                    booksArray: json,
-                    isLoaded: true,
-                })
-            })
-    }
+        // client
+        //     .query({
+        //         query: gql`
+        //         query GetLocations {
+        //         locations {
+        //             id
+        //             name
+        //             description
+        //             photo
+        //         }
+        //         }
+        //     `,
+        //     })
+        //     .then((result) => console.log(result));
+        const res = await fetch("https://s3-ap-southeast-1.amazonaws.com/he-public-data/books8f8fe52.json");
+        const json = await res.json();
+        setData({
+            ...data,
+            isLoaded: true,
+            booksArray: json
+        });
+    };
 
-    render() {
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+    const renderData = () => {
+        const { isLoaded } = data;
+
         return (
             <>
-                {!this.state.isLoaded && <p style={{ color: "white", textAlign: "center" }}>Loading...</p>}
-                {this.state.isLoaded && <BookList
-                    datas={this.state}
-                    pageCalculation={() => this.pageCalculation()}
-                    paginateNextPage={() => this.paginateNextPage()}
-                    paginatePreviousPage={() => this.paginatePreviousPage()}
+                {!isLoaded && <p style={{ color: "white", textAlign: "center" }}>Loading...</p>}
+                {isLoaded && <BookList
+                    datas={data}
+                    pageCalculation={() => pageCalculation()}
+                    paginateNextPage={() => NextPage()}
+                    paginatePreviousPage={() => PreviousPage()}
                 />}
             </>
         );
@@ -45,56 +73,51 @@ class BookListContainer extends Component {
      * 
      * @returns Tbody
      */
-    pageCalculation() {
-        const { booksArray, currentPage, perPage } = this.state
-        let lastIndex = currentPage * perPage
-        let firstIndex = lastIndex - perPage
-        return (booksArray.slice(firstIndex, lastIndex)
-            .map(data => {
+    const pageCalculation = () => {
+        const { booksArray, currentPage } = data;
+        const lastIndex = currentPage * 10
+        const firstIndex = lastIndex - 10
+
+        return (
+            booksArray.slice(firstIndex, lastIndex).map(data => {
+                const { bookID, average_rating, authors,
+                    language_code, price, ratings_count, title } = data;
                 return (
-                    <tr key={data.bookID}>
+                    <tr key={bookID}>
                         <td>
-                            <Link className='list-link' to={`/bookList/${data.bookID}/${data.authors}/${data.language_code}
-                                /${data.average_rating}/${data.price}/${data.ratings_count}/${data.title}`}>
-                                {data.title}
+                            <Link className='list-link' to={`/bookList/${bookID}/${authors}/${language_code}
+                                /${average_rating}/${price}/${ratings_count}/${title}`}>
+                                {title}
                             </Link>
                         </td>
-                        <td>{data.authors}</td>
-                        <td>₹{data.price}</td>
-                        <td>{data.average_rating}</td>
+                        <td>{authors}</td>
+                        <td>₹{price}</td>
+                        <td>{average_rating}</td>
                     </tr>
                 )
             })
         )
     }
 
-    paginateNextPage() {
-        this.props.paginateNextPage()
-        this.setState({
-            currentPage: this.props.currentPage + 1
+    const NextPage = () => {
+        const { currentPage } = data;
+
+        dispatch(paginateNextPage())
+        setData({
+            currentPage: currentPage + 1
         })
     }
 
-    paginatePreviousPage() {
-        this.props.paginatePreviousPage()
-        this.setState({
-            currentPage: this.props.currentPage - 1
+    const PreviousPage = () => {
+        const { currentPage } = data;
+
+        dispatch(paginatePreviousPage())
+        setData({
+            currentPage: currentPage - 1
         })
     }
 
+    return renderData();
 }
 
-const mapStateToProps = (state) => {
-    return {
-        currentPage: state.Page
-    }
-}
-
-const mapDispatchtoProps = (dispatch) => {
-    return {
-        paginateNextPage: () => dispatch(paginateNextPage()),
-        paginatePreviousPage: () => dispatch(paginatePreviousPage())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchtoProps)(BookListContainer);
+export default BookListContainer;

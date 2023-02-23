@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
     Page: 1,
 }
 
@@ -8,7 +8,7 @@ const initialState = {
  * @param {*} action 
  * @returns next page number
  */
-const paginatePage = (state = initialState, action) => {
+export const paginatePage = (state = initialState, action) => {
     switch(action.type) {
         case 'NEXT_PAGE': return {
             ...state,

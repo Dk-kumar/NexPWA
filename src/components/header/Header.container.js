@@ -1,18 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from './Header.component';
 
-class HeaderContainer extends Component {
+const HeaderContainer = () => {
     
-    constructor(props) {
-        super(props);
-        this.state = {  }
-    }
-
-    render() { 
-        return (  
-            <Header />
-        );
-    }
+    return (  
+        <Header />
+    );
 }
  
 export default HeaderContainer;
