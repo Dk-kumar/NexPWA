@@ -1,5 +1,5 @@
 export const initialState = {
-    Page: 1,
+    currentPage: 1,
 }
 
 /**
@@ -12,11 +12,11 @@ export const paginatePage = (state = initialState, action) => {
     switch(action.type) {
         case 'NEXT_PAGE': return {
             ...state,
-            Page: state.Page +1
+            currentPage: state.currentPage +1
         }
         case 'PREVIOUS_PAGE' : return {
             ...state,
-            Page: state.Page -1
+            currentPage: state.currentPage -1
         }
 
         default: return state

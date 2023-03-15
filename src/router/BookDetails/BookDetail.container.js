@@ -1,17 +1,10 @@
-import React, { Component } from 'react';
 import BooksDetails from './BookDetail.component';
 
-class BookDetailsContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
+function BookDetailsContainer() {
 
-    render() {
-        return (
-            <BooksDetails />
-        );
-    }
+    return (
+        <BooksDetails />
+    )
 }
 
 export default BookDetailsContainer;

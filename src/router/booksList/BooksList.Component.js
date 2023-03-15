@@ -2,7 +2,8 @@ import React from 'react';
 import './BooksList.scss'
 
 function BookList(props) {
-    const { datas, paginateNextPage, paginatePreviousPage } = props;
+    console.log(props);
+    const { paginateNextPage, currentPage, paginatePreviousPage } = props;
 
     return (
         <>
@@ -20,8 +21,8 @@ function BookList(props) {
                 </tbody>
             </table>
             <div className='pagination-buttons'>
-                <button className='pervious-button' onClick={paginatePreviousPage}>Previous</button>
-                <span className='current-page'>{datas.currentPage}</span>
+                <button className='pervious-button' disabled={ currentPage <= 1} onClick={paginatePreviousPage}>Previous</button>
+                <span className='current-page'>{currentPage.currentPage}</span>
                 <button className='next-button' onClick={paginateNextPage}>Next</button>
             </div>
         </>

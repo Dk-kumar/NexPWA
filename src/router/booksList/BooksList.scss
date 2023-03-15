@@ -51,6 +51,11 @@ tr:nth-child(even) {
         padding: .5rem;
         border-radius: .2rem;
         cursor: pointer;
+
+        &:disabled {
+            background-color: #818d9a;
+            cursor: not-allowed;
+        }
     }
     & .next-button {
         background-color: #007bff;

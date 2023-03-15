@@ -11,7 +11,6 @@ const useInfiniteScroll = () => {
             === document.documentElement.offsetHeight;
             setBottom(isBottom);
         }
-        console.log(bottom)
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);

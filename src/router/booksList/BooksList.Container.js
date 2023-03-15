@@ -1,43 +1,21 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useContext } from 'react';
+import BookContext from '../../contexts/booksProvider';
 import { Link } from 'react-router-dom';
 import BookList from './BooksList.Component';
 import { useState } from 'react';
-import { paginateNextPage, paginatePreviousPage } from '../../redux/BooksList/BookListAction';
+// import { paginateNextPage, paginatePreviousPage } from '../../redux/BooksList/BookListAction';
+// import { paginatePage, initialState } from '../../redux/BooksList/BookListReducer'
 
 function BookListContainer() {
-    const dispatch = useDispatch();
-    // const paginateNext = dispatch(props.paginateNextPage());
-    // const paginatePrevious = dispatch(props.paginatePreviousPage());
-    const currentPage = useSelector(state => state.Page);
-
+    const {currentPage, paginateNextPage, paginatePreviousPage } = useContext(BookContext);
+    // const [ currentPage, dispatch ] = useReducer(paginatePage, initialState)
     const [data, setData] = useState({
         booksArray: [],
         isLoaded: false,
-        currentPage: currentPage,
         perPage: 10
     })
 
     const fetchData = async () => {
-        // const client = new ApolloClient({
-        //     uri: 'https://countries.trevorblades.com/graphql',
-        //     cache: new InMemoryCache(),
-        // });
-
-        // client
-        //     .query({
-        //         query: gql`
-        //         query GetLocations {
-        //         locations {
-        //             id
-        //             name
-        //             description
-        //             photo
-        //         }
-        //         }
-        //     `,
-        //     })
-        //     .then((result) => console.log(result));
         const res = await fetch("https://s3-ap-southeast-1.amazonaws.com/he-public-data/books8f8fe52.json");
         const json = await res.json();
         setData((data) => ({
@@ -58,10 +36,11 @@ function BookListContainer() {
             <>
                 {!isLoaded && <p style={{ color: "white", textAlign: "center" }}>Loading...</p>}
                 {isLoaded && <BookList
+                    currentPage= {currentPage}
                     datas={data}
                     pageCalculation={() => pageCalculation()}
-                    paginateNextPage={() => NextPage()}
-                    paginatePreviousPage={() => PreviousPage()}
+                    paginateNextPage={() => paginateNextPage()}
+                    paginatePreviousPage={() => paginatePreviousPage()}
                 />}
             </>
         );
@@ -72,10 +51,11 @@ function BookListContainer() {
      * @returns Tbody
      */
     const pageCalculation = () => {
-        const { booksArray, currentPage } = data;
+        const { booksArray } = data;
         const lastIndex = currentPage * 10
         const firstIndex = lastIndex - 10
 
+        console.log(data);
         return (
             booksArray.slice(firstIndex, lastIndex).map(data => {
                 const { bookID, average_rating, authors,
@@ -97,23 +77,13 @@ function BookListContainer() {
         )
     }
 
-    const NextPage = () => {
-        const { currentPage } = data;
+    // const NextPage = () => {
+    //     dispatch(paginateNextPage())
+    // }
 
-        dispatch(paginateNextPage())
-        setData({
-            currentPage: currentPage + 1
-        })
-    }
-
-    const PreviousPage = () => {
-        const { currentPage } = data;
-
-        dispatch(paginatePreviousPage())
-        setData({
-            currentPage: currentPage - 1
-        })
-    }
+    // const PreviousPage = () => {
+    //     dispatch(paginatePreviousPage())
+    // }
 
     return renderData();
 }
