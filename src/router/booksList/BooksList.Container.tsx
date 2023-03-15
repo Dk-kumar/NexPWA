@@ -37,7 +37,6 @@ function BookListContainer() {
                 {!isLoaded && <p style={{ color: "white", textAlign: "center" }}>Loading...</p>}
                 {isLoaded && <BookList
                     currentPage= {currentPage}
-                    datas={data}
                     pageCalculation={() => pageCalculation()}
                     paginateNextPage={() => paginateNextPage()}
                     paginatePreviousPage={() => paginatePreviousPage()}
@@ -50,18 +49,19 @@ function BookListContainer() {
      * 
      * @returns Tbody
      */
-    const pageCalculation = () => {
+    const pageCalculation:Function = (): JSX.Element => {
         const { booksArray } = data;
         const lastIndex = currentPage * 10
         const firstIndex = lastIndex - 10
 
-        console.log(data);
         return (
-            booksArray.slice(firstIndex, lastIndex).map(data => {
-                const { bookID, average_rating, authors,
-                    language_code, price, ratings_count, title } = data;
-                return (
-                    <tr key={bookID}>
+            <>
+            {
+                booksArray.slice(firstIndex, lastIndex).map(data => {
+                    const { bookID, average_rating, authors,
+                        language_code, price, ratings_count, title } = data;
+                        return (
+                            <tr key={bookID}>
                         <td>
                             <Link className='list-link' to={`/bookList/${bookID}/${authors}/${language_code}
                                 /${average_rating}/${price}/${ratings_count}/${title}`}>
@@ -74,6 +74,7 @@ function BookListContainer() {
                     </tr>
                 )
             })
+        }</>
         )
     }
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import './BookDetail.scss'
 import { useParams } from 'react-router-dom';
 

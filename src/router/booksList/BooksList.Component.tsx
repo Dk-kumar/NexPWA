@@ -1,10 +1,15 @@
 import React from 'react';
 import './BooksList.scss'
 
-function BookList(props) {
-    console.log(props);
-    const { paginateNextPage, currentPage, paginatePreviousPage } = props;
+interface BookListProps {
+    pageCalculation: () => JSX.Element[]
+    paginateNextPage?: () => void
+    currentPage?: number
+    paginatePreviousPage?: () => void
+}
 
+function BookList({ paginateNextPage, currentPage = 1, 
+    paginatePreviousPage, pageCalculation }: BookListProps): JSX.Element {
     return (
         <>
             <table >
@@ -17,12 +22,12 @@ function BookList(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.pageCalculation()}
+                    {pageCalculation()}
                 </tbody>
             </table>
             <div className='pagination-buttons'>
                 <button className='pervious-button' disabled={ currentPage <= 1} onClick={paginatePreviousPage}>Previous</button>
-                <span className='current-page'>{currentPage.currentPage}</span>
+                <span className='current-page'>{currentPage}</span>
                 <button className='next-button' onClick={paginateNextPage}>Next</button>
             </div>
         </>

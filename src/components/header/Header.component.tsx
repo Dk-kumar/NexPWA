@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './Header.scss'
 
 const Header = () => {
-
     return (
         <div className='container'>
             <div className="container-heading">Book Store</div>
